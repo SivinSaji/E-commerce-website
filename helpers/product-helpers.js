@@ -1,20 +1,17 @@
-var db=require('../config/connection')
-var collection=require('../config/collections')
-module.exports={
+var db = require("../config/connection")
+var collection = require('../config/collection')
 
+module.exports = {
     addProduct:(product,callback)=>{
-
-
-    db.get().collection('product').insertOne(product).then((data)=>{
-      
-      callback(data.ops[0]._id)
-      
-    })
+        db.get().collection('product').insert(product).then((data) => {
+            // console.log(data.ops[0]._id)
+            callback(data.ops[0]._id)
+        })
     },
-    getAllProducts:()=>{
-      return new Promise(async(resolve,rejct)=>{
-        let products=await db.get().collection(collection.PRODUCT_COLLECTION).find().toArray()
-        resolve(products)
-      })
+    getAllProduct:()=>{
+        return new Promise((resolve, reject)=>{
+            let products = db.get().collection(collection.PRODUCT_COLLECTION).find().toArray()
+            resolve(products)
+        })
     }
 }
